@@ -37,10 +37,10 @@ To set the candump command in the background use the following commands:
  The bg command resumes the command in the background
 
 
-# These are all the keyboard shortcuts implemented:
+These are all the keyboard shortcuts implemented:
 	- +	increment value
 	- -	decrement value
- 	- t 	toggle between the temperature and voltage values
+	- t 	toggle between the temperature and voltage values
 	- s 	toggle the sending of CAN messages
 	- p 	toggle the pringing of values in the terminal
 	- a 	autoset the values to a safe value(a safe value is the value that doesn't cause errors)
