@@ -15,10 +15,10 @@ The following functionality has been implemented in this script:
 # Requirements
 
 This script uses the can-utils library, to install it run the following commands:
- 	'''
+ 	```
  	sudo apt-get update
  	sudo apt-get -y install can-utils
- 	'''
+ 	```
 
 # How to use?
 
@@ -28,11 +28,12 @@ This script has to run in the foreground, it cannot be pushed to the background.
 The way I do it is I push the candump command to the background and the run this in the foreground.
 
 To set the candump command in the background use the following commands:
-	```
-	candump can0
-	ctrl + z
-	bg
-	```
+
+```
+candump can0
+ctrl + z
+bg
+```
 
  The ctrl + z pushes the command to the background
  The bg command resumes the command in the background
@@ -41,10 +42,10 @@ To set the candump command in the background use the following commands:
 # These are all the keyboard shortcuts implemented:
 
 ```
-	+	increment value
-	-	decrement value
- 	t 	toggle between the temperature and voltage values
-	s 	toggle the sending of CAN messages
-	p 	toggle the pringing of values in the terminal
- 	a 	autoset the values to a safe value(a safe value is the value that doesn't cause errors)
++	increment value
+-	decrement value
+t 	toggle between the temperature and voltage values
+s 	toggle the sending of CAN messages
+p 	toggle the pringing of values in the terminal
+a 	autoset the values to a safe value(a safe value is the value that doesn't cause errors)
 ```
