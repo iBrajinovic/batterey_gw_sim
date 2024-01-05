@@ -21,7 +21,7 @@ sudo apt-get update
 sudo apt-get -y install can-utils
 ```
 
-# How to use?
+# Usage
 
 If needed, edit the CAN channel you are using.
 
@@ -40,7 +40,7 @@ bg
  The bg command resumes the command in the background
 
 
-# These are all the keyboard shortcuts implemented:
+# Keyboard shortcuts:
 
 ```
 +	increment value
