@@ -5,4 +5,4 @@ In this version you can use the keyboard shortcuts:
   - s for decrementing
   - q for toggle between temperature and voltage
 
-The voltage is not corrent as it does not convert the hex value to Big Endian.
+The voltage is not correct as it does not convert the hex value to Big Endian.
