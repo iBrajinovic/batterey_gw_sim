@@ -1,9 +1,4 @@
 #!/bin/bash
-# How to?
-
-# 	candump can0
-# 	ctrl + z
-# 	bg
 
 # Shortcuts:
 #	+	increment value
