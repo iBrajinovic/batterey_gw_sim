@@ -15,10 +15,11 @@ The following functionality has been implemented in this script:
 # Requirements
 
 This script uses the can-utils library, to install it run the following commands:
- 	```
- 	sudo apt-get update
- 	sudo apt-get -y install can-utils
- 	```
+
+```
+sudo apt-get update
+sudo apt-get -y install can-utils
+```
 
 # How to use?
 
