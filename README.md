@@ -23,10 +23,9 @@ sudo apt-get -y install can-utils
 
 # Usage
 
-If you get the error *if_nametoindex: No such device* error, you need to open(with a code/text editor you use) the script and edit the `can_channel` name you are using.
+You run this script by typing its name in the terminal: `./gw_sim.sh`. The way you are going to use the script is left to you. I run the `candump` command in the background so it prints me the decoded messages in the terminal and I use the gw_sim in the foreground to change the cell voltage and temerature as needed. If you get the error *if_nametoindex: No such device*, you need to open(with a code/text editor you use) the script and edit the `can_channel` name you are using.
 
 This script has to run in the **foreground**, it cannot be pushed to the background. 
-The way I do it is I push the candump command to the background and the run this in the foreground.
 
 To set the candump command in the background use the following commands:
 
