@@ -1,12 +1,12 @@
 # About
 
-This script is used to fake the battery gateway connected do the AXXELLON CCU.
-Without this script, the CCU cannot be set in the DISCHARGE state as the
-Error_Ecu_Communication error would be set in the 0x181 message.
+This script is used to fake the battery gateway connected to the AXXELLON CCU. The was it does this is by sending 401, 501, 502, 503, 601 and 602 messages via the CAN bus.
+Without this script, the CCU cannot be set in the DISCHARGE state as the Error_Ecu_Communication error would be set in the 0x181 message.
+
+This script enables the user to completely controll the values of the cell voltages and temperatures as well as to start/stop sending the CAN messages.
 
 The following functionality has been implemented in this script:
 
-- send the required CAN messages to resolve the above mentioned error i.e. 401, 501, 502, 503, 601, 602
 - increase or decrease the temperature of each battery cell
 - increase or decrease the voltage of each battery cell
 - start/stop sending the CAN messages
@@ -23,9 +23,9 @@ sudo apt-get -y install can-utils
 
 # Usage
 
-If needed, edit the CAN channel you are using.
+If you get the error *if_nametoindex: No such device* error, you need to open(with a code/text editor you use) the script and edit the `can_channel` name you are using.
 
-This script has to run in the foreground, it cannot be pushed to the background. 
+This script has to run in the **foreground**, it cannot be pushed to the background. 
 The way I do it is I push the candump command to the background and the run this in the foreground.
 
 To set the candump command in the background use the following commands:
@@ -36,9 +36,8 @@ ctrl + z
 bg
 ```
 
- The ctrl + z pushes the command to the background
- The bg command resumes the command in the background
-
+The `ctrl + z` stops and then pushes the currently running task to the background after which the `bg` command resumes the task in the background. 
+After that, you run this script with `./gw_sim.sh` and now you manipulate the values with the keyboard shortcuts shown below.
 
 # Keyboard shortcuts:
 
