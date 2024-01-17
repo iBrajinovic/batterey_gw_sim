@@ -3,12 +3,12 @@
 This script is used to fake the battery gateway connected to the AXXELLON CCU. The was it does this is by sending 401, 501, 502, 503, 601 and 602 messages via the CAN bus.
 Without this script, the CCU cannot be set in the DISCHARGE state as the Error_Ecu_Communication error would be set in the 0x181 message.
 
-This script enables the user to completely controll the values of the cell voltages and temperatures as well as to start/stop sending the CAN messages.
+This script enables the user to completely control the values of the cell voltages and temperatures as well as to start/stop sending the CAN messages.
 
 The following functionality has been implemented in this script:
 
-- increase or decrease the temperature of each battery cell
-- increase or decrease the voltage of each battery cell
+- increase/decrease the temperature of each battery cell
+- increase/decrease the voltage of each battery cell
 - start/stop sending the CAN messages
 - start/stop printing the temperature and voltage values in the CAN messages
 

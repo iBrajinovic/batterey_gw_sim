@@ -8,7 +8,7 @@
 #	p 	toggle the pringing of values in the terminal
 # 	a 	autoset the values to a safe value(a safe value is the value that doesn't cause errors)
 
-can_channel="vcan0"
+can_channel="can0"
 
 can_temperature=14
 hex_temperature=0
