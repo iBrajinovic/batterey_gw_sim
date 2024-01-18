@@ -1,3 +1,5 @@
+Working with threads is no easy task in python. The probelm I am having is that the function get_user_inpu() uses the getch() function for reading user input which is a blocking-mode input reading function and that stalls the whole execution sequence. One would think that is not a problem because that function is executing in another thread... One would be wrong. The way Python with the standard interpreter handles threads is concurrency. It means he does one thread and then switches to another. Since I have a blocking-mode input command, it blocks the whole execution!
+
 # About
 
 This script is used to fake the battery gateway connected to the AXXELLON CCU. The was it does this is by sending 401, 501, 502, 503, 601 and 602 messages via the CAN bus.
