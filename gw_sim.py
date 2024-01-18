@@ -3,117 +3,103 @@ import time
 from data import Data
 from sender import Sender
 import threading
-from getch import getch
-from queue import Queue
+import subprocess
+
+class GwSimulator:
+	def __init__(self):
+		self.data = Data()
+		self.bus = can.interface.Bus(data.get_can_name(), bustype="socketcan")
+		self.sender = Sender(data, bus)
+		self.key = ""
 
 
-queue = Queue()
+	def get_user_input(self):
+		# non-blocking input that does not require ENTER at 
+		# the end of input by using subprocess and bash commands
+		# tried and failed:
+		# 	- pygame
+		#	- getch
+		#	- threads
+		#	- thermios
+		# 	- subprocess
 
-def get_user_input():
-	global queue
-	while True:
-		print("here")
-		key = getch()
-		queue.put(key)
-		#time.sleep(0.1)
-		if key == "q":
-			exit()
+		proc = subprocess.Popen("read -n1 -t 0.1 input;echo $input", stdout = subprocess.PIPE, shell=True, executable="/bin/bash")
+		(self.key, err) = proc.communicate()
+		self.key = chr(self.key[0])
 
 
-def main():
-	global queue
-	can_name = "vcan0"
+	def simulate(self):
+		while True:
+			key = self.get_user_input()
+			if key == "t":
+				if data.get_mode_select() == 0:
+					data.set_mode_select(1)
+				else:
+					data.set_mode_select(0)
 
-	data = Data()
+			elif key == "+":
+				if data.get_mode_select() == 0:
+					data.set_voltage(data.get_voltage() + 1)
+				else:
+					data.set_temperature(data.get_temperature() + 1)
 
-	mode_select = 0
-	print_mode = 0
-	send_mode = 1
+			elif key == "z":
+				if data.get_mode_select() == 0:
+					data.set_voltage(data.get_voltage() + 10)
+				else:
+					data.set_temperature(data.get_temperature() + 10)
 
-	bus = can.interface.Bus(can_name, bustype="socketcan")
+			elif key == "h":
+				if data.get_mode_select() == 0:
+					data.set_voltage(data.get_voltage() + 100)
+				else:
+					data.set_temperature(data.get_temperature() + 100)
 
-	sender = Sender(data, bus)
-	
-	i_thread = threading.Thread(target=get_user_input)
-	i_thread.start()
+			elif key == "-":
+				if data.get_mode_select() == 0:
+					data.set_voltage(data.get_voltage() - 1)
+				else:
+					data.set_temperature(data.get_temperature() - 1)
 
-	
-	while True:
-		key = queue.get() if not queue.empty() else "0"
-		if key == "t":
-			if mode_select == 0:
-				mode_select = 1
-			else:
-				mode_select = 0
+			elif key == "u":
+				if data.get_mode_select() == 0:
+					data.set_voltage(data.get_voltage() - 10)
+				else:
+					data.set_temperature(data.get_temperature() - 10)
 
-		elif key == "+":
-			if mode_select == 0:
-				data.set_voltage(data.get_voltage() + 1)
-			else:
-				data.set_temperature(data.get_temperature() + 1)
+			elif key == "j":
+				if data.get_mode_select() == 0:
+					data.set_voltage(data.get_voltage() - 100)
+				else:
+					data.set_temperature(data.get_temperature() - 100)
 
-		elif key == "z":
-			if mode_select == 0:
-				data.set_voltage(data.get_voltage() + 10)
-			else:
-				data.set_temperature(data.get_temperature() + 10)
+			elif key == "p":
+				if data.get_print_mode() == 0:
+					data.set_print_mode(1)
+				else:
+					data.set_print_mode(0)
 
-		elif key == "h":
-			if mode_select == 0:
-				data.set_voltage(data.get_voltage() + 100)
-			else:
-				data.set_temperature(data.get_temperature() + 100)
+			elif key == "s":
+				if data.get_send_mode() == 0:
+					data.set_send_mode(1)
+				else:
+					data.set_send_mode(0)
 
-		elif key == "-":
-			if mode_select == 0:
-				data.set_voltage(data.get_voltage() - 1)
-			else:
-				data.set_temperature(data.get_temperature() - 1)
+			elif key == "a":
+				data.set_voltage(4000)
+				data.set_temperature(20)
 
-		elif key == "u":
-			if mode_select == 0:
-				data.set_voltage(data.get_voltage() - 10)
-			else:
-				data.set_temperature(data.get_temperature() - 10)
+			elif key == "q":
+				exit()
 
-		elif key == "j":
-			if mode_select == 0:
-				data.set_voltage(data.get_voltage() - 100)
-			else:
-				data.set_temperature(data.get_temperature() - 100)
+			if data.get_print_mode() == 1:
+				print(f"\tVoltage: {data.get_hex_voltage()}\n\tTemperature: {data.get_temperature()}\n\n\n")
 
-		elif key == "p":
-			if print_mode == 0:
-				print_mode = 1
-			else:
-				print_mode = 0
+			if data.get_send_mode() == 1:
+				sender.send()
 
-		elif key == "s":
-			if send_mode == 0:
-				send_mode = 1
-			else:
-				send_mode = 0
-
-		elif key == "a":
-			data.set_voltage(4000)
-			data.set_temperature(20)
-
-		elif key == "q":
-			exit()
-
-		if print_mode == 1:
-			print(f"Voltage: {data.get_hex_voltage()}\nTemperature: {data.get_temperature()}\n\n\n")
-
-		if send_mode == 1:
-			sender.send()
-
-		key = "0"
-		#time.sleep(0.2)
-
-		
-
-	#incoming_message = bus.recv(1.0)
+			time.sleep(0.1)
 
 
 if __name__ == "__main__":
-	main()
+	GwSimulator.simulate()
